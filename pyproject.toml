@@ -1,0 +1,27 @@
+[project]
+name = "agent-patterns-lab"
+version = "0.0.0"
+description = "Offline-first reference implementations of agent design patterns (no LangChain)."
+readme = "README.md"
+requires-python = ">=3.11"
+dependencies = []
+
+[project.optional-dependencies]
+openai = ["openai>=1"]
+anthropic = ["anthropic>=0.40"]
+docs = [
+  "mkdocs>=1.6",
+  "mkdocs-material>=9.5",
+  "mkdocs-static-i18n>=1.0",
+  "mkdocs-mermaid2-plugin>=1.2",
+]
+
+[build-system]
+requires = ["setuptools>=68"]
+build-backend = "setuptools.build_meta"
+
+[tool.setuptools]
+package-dir = { "" = "src" }
+
+[tool.setuptools.packages.find]
+where = ["src"]

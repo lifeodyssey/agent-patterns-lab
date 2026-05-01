@@ -1,0 +1,6 @@
+{"doc_id":"paris","text":"Paris is the capital of France."}
+{"doc_id":"moon","text":"The Moon is Earth's only natural satellite."}
+{"doc_id":"agent_loop","text":"An agent loop is a control loop: decide -> act -> observe -> update state -> repeat until done."}
+{"doc_id":"rag","text":"RAG (Retrieval-Augmented Generation) retrieves relevant documents and uses them as context to ground an answer."}
+{"doc_id":"react","text":"ReAct alternates reasoning and tool use: reason -> act (tool) -> observe -> reason -> ..."}
+{"doc_id":"guardrails","text":"Guardrails are policy checks on inputs, outputs, and tool calls; tripwires can block or escalate risky actions."}

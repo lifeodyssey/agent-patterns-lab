@@ -1,0 +1,98 @@
+site_name: Agent Patterns Lab
+
+theme:
+  name: material
+  language: en
+  features:
+    - navigation.sections
+    - navigation.expand
+    - toc.follow
+  palette:
+    - scheme: default
+      primary: indigo
+      accent: indigo
+    - scheme: slate
+      primary: indigo
+      accent: indigo
+
+plugins:
+  - search
+  - mermaid2
+  - i18n:
+      docs_structure: folder
+      languages:
+        - locale: en
+          default: true
+          name: English
+          build: true
+        - locale: zh
+          name: 简体中文
+          build: true
+          nav_translations:
+            Map: 地图
+            Building Blocks: 基建
+            Patterns: 模式
+            Workflow: 工作流
+            Agent Loop: Agent Loop
+            Reliability: 可靠性
+            Memory & Retrieval: 记忆与检索
+            Planning & Search: 规划与搜索
+            Multi-Agent: 多智能体
+            Governance: 治理与安全
+            Evaluation: 评测与回归
+
+markdown_extensions:
+  - admonition
+  - pymdownx.details
+  - pymdownx.superfences:
+      custom_fences:
+        - name: mermaid
+          class: mermaid
+          format: !!python/name:mermaid2.fence_mermaid_custom
+
+nav:
+  - Map: index.md
+  - Building Blocks:
+      - Runtime Overview: building_blocks/runtime.md
+      - Structured Output: building_blocks/structured_output.md
+      - Tool Calling: building_blocks/tools.md
+      - Loop Controller: building_blocks/runner.md
+      - Tracing: building_blocks/tracing.md
+      - Reliability Primitives: building_blocks/reliability.md
+      - Cache: building_blocks/cache.md
+      - Memory: building_blocks/memory.md
+      - Retrieval: building_blocks/retrieval.md
+  - Patterns:
+      - Workflow:
+          - Prompt Chaining: patterns/workflow_chaining.md
+          - Routing: patterns/routing.md
+      - Agent Loop:
+          - ReAct: patterns/react.md
+      - Reliability:
+          - Maker-Checker: patterns/maker_checker.md
+          - Voting: patterns/voting.md
+          - Chain-of-Verification: patterns/cove.md
+      - Memory & Retrieval:
+          - Retrieval Loop: patterns/retrieval_loop.md
+          - Agentic RAG: patterns/agentic_rag.md
+          - Reflexion: patterns/reflexion.md
+          - STORM: patterns/storm.md
+      - Planning & Search:
+          - Plan & Solve: patterns/plan_and_solve.md
+          - Planner-Executor-Replanner: patterns/planner_executor_replanner.md
+          - REWOO: patterns/rewoo.md
+          - LLM Compiler: patterns/llm_compiler.md
+          - LATS: patterns/lats.md
+          - Self-Discovery: patterns/self_discovery.md
+      - Multi-Agent:
+          - Manager-Worker: patterns/manager_worker.md
+          - Agents-as-Tools: patterns/agents_as_tools.md
+          - Group Chat: patterns/group_chat.md
+          - Handoff: patterns/handoff.md
+          - Magentic Orchestration: patterns/magentic_orchestration.md
+  - Governance:
+      - Policy: governance/policy.md
+      - Guardrails: governance/guardrails.md
+      - HITL: governance/hitl.md
+  - Evaluation:
+      - Eval Harness: evaluation/eval_harness.md

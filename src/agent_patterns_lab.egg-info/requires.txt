@@ -1,0 +1,12 @@
+
+[anthropic]
+anthropic>=0.40
+
+[docs]
+mkdocs>=1.6
+mkdocs-material>=9.5
+mkdocs-static-i18n>=1.0
+mkdocs-mermaid2-plugin>=1.2
+
+[openai]
+openai>=1

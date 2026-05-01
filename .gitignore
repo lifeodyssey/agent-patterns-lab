@@ -1,0 +1,10 @@
+.venv/
+.uv_cache/
+.python-version
+__pycache__/
+*.pyc
+.traces/
+.evals/
+site/
+.wrangler/
+.DS_Store
