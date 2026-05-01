@@ -17,6 +17,6 @@ flowchart TD
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/runner.py`
-- 测试：`tests/test_runner.py`
+- 实现： [`src/agent_patterns_lab/runtime/runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/runner.py)
+- 测试： [`tests/test_runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_runner.py)
 

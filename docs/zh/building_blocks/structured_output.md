@@ -35,7 +35,7 @@ flowchart TD
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/structured.py`
-- 示例：`examples/10_structured_output.py`
-- 测试：`tests/test_structured.py`
+- 实现： [`src/agent_patterns_lab/runtime/structured.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/structured.py)
+- 示例： [`examples/10_structured_output.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/10_structured_output.py)
+- 测试： [`tests/test_structured.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_structured.py)
 

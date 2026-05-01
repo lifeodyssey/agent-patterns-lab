@@ -28,9 +28,9 @@ flowchart TD
 
 ## Repo Reference
 
-- CLI: `src/agent_patterns_lab/runtime/evals/__main__.py`
-- Tasks: `src/agent_patterns_lab/runtime/evals/tasks.py`
-- Runner: `src/agent_patterns_lab/runtime/evals/runner.py`
-- Report: `src/agent_patterns_lab/runtime/evals/report.py`
-- Tests: `tests/test_evals_runner.py`
+- CLI: [`src/agent_patterns_lab/runtime/evals/__main__.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/evals/__main__.py)
+- Tasks: [`src/agent_patterns_lab/runtime/evals/tasks.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/evals/tasks.py)
+- Runner: [`src/agent_patterns_lab/runtime/evals/runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/evals/runner.py)
+- Report: [`src/agent_patterns_lab/runtime/evals/report.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/evals/report.py)
+- Tests: [`tests/test_evals_runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_evals_runner.py)
 

@@ -11,7 +11,7 @@ RAG 系列模式离不开检索。为了学习与回归，我们希望：
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/retrieval.py`
+- 实现： [`src/agent_patterns_lab/runtime/retrieval.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/retrieval.py)
 - 语料：`data/mini_corpus.jsonl`
-- 测试：`tests/test_retrieval.py`
+- 测试： [`tests/test_retrieval.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_retrieval.py)
 

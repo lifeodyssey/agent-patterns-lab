@@ -34,7 +34,7 @@ flowchart TD
 
 ## Repo 对应
 
-- 代码：`src/agent_patterns_lab/runtime/hitl.py`
-- 示例：`examples/66_governance_hitl_policy_guardrails.py`
-- 测试：`tests/test_hitl.py`
+- 代码： [`src/agent_patterns_lab/runtime/hitl.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/hitl.py)
+- 示例： [`examples/66_governance_hitl_policy_guardrails.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/66_governance_hitl_policy_guardrails.py)
+- 测试： [`tests/test_hitl.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_hitl.py)
 

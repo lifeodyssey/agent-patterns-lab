@@ -31,7 +31,7 @@ flowchart TD
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/tools.py`
-- 示例：`examples/20_tool_calling.py`
-- 测试：`tests/test_tools.py`
+- 实现： [`src/agent_patterns_lab/runtime/tools.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/tools.py)
+- 示例： [`examples/20_tool_calling.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/20_tool_calling.py)
+- 测试： [`tests/test_tools.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_tools.py)
 

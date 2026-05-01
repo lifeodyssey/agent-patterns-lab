@@ -31,7 +31,7 @@ These are exactly why **governance** (policy/guardrails/HITL) hooks exist.
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/tools.py`
-- Example: `examples/20_tool_calling.py`
-- Tests: `tests/test_tools.py`
+- Implementation: [`src/agent_patterns_lab/runtime/tools.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/tools.py)
+- Example: [`examples/20_tool_calling.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/20_tool_calling.py)
+- Tests: [`tests/test_tools.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_tools.py)
 

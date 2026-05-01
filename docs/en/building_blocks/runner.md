@@ -17,6 +17,6 @@ flowchart TD
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/runner.py`
-- Tests: `tests/test_runner.py`
+- Implementation: [`src/agent_patterns_lab/runtime/runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/runner.py)
+- Tests: [`tests/test_runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_runner.py)
 

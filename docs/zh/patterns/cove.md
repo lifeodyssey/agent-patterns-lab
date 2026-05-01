@@ -19,6 +19,25 @@ flowchart TD
   R --> O["Final"]
 ```
 
+## 它是如何运作的
+
+核心思路是：把“验证”拆成独立工作流，而不是一句“请核对一下”：
+
+- **Claim 抽取**：把自由文本的 draft 转成“可检查条目列表”。
+  - 好的 claim 要具体、可测试，并且有明确的通过/失败条件
+- **逐条验证**：对每条 claim 用证据去验证：
+  - 检索/搜索
+  - 确定性校验（数学、单位换算、约束检查）
+  - 高风险走人工审批（HITL）
+- **基于证据修订**：把不支持的 claim 删除/改写，最后只留下能自证的内容。
+
+## 常见失败模式与对策
+
+- **漏掉 claim**：强制结构化 claim 列表；必要时二次抽取。
+- **验证太弱**（靠“看起来像真”）：要求证据产物（doc_id、引用片段、计算过程）。
+- **验证成本过高**：只验证高风险 claim；对简单问题路由到轻量流程。
+- **证据过期**：对时效敏感问题记录来源时间戳，必要时刷新验证。
+
 ## 演化路径
 
 - 相比 Maker-Checker 更聚焦“事实 claim”
@@ -26,7 +45,6 @@ flowchart TD
 
 ## 本仓库对应
 
-- 代码：`src/agent_patterns_lab/patterns/cove.py`
-- 示例：`examples/32_cove.py`
-- 测试：`tests/test_cove.py`
-
+- 代码： [`src/agent_patterns_lab/patterns/cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/cove.py)
+- 示例： [`examples/32_cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/32_cove.py)
+- 测试： [`tests/test_cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_cove.py)

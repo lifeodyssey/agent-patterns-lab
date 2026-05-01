@@ -1,4 +1,9 @@
 site_name: Agent Patterns Lab
+site_url: https://agent-patterns-lab.pages.dev/
+
+repo_url: https://github.com/lifeodyssey/agent-patterns-lab
+repo_name: lifeodyssey/agent-patterns-lab
+edit_uri: edit/main/docs/
 
 theme:
   name: material

@@ -10,6 +10,6 @@ For LLM/tool calls, caching helps:
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/cache.py`
-- Tests: `tests/test_cache.py`
+- Implementation: [`src/agent_patterns_lab/runtime/cache.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/cache.py)
+- Tests: [`tests/test_cache.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_cache.py)
 

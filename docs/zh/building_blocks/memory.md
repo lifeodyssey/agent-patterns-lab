@@ -13,7 +13,7 @@
 
 ## 本仓库对应代码
 
-- KV：`src/agent_patterns_lab/runtime/memory/kv.py`
-- Session：`src/agent_patterns_lab/runtime/memory/session.py`
-- 测试：`tests/test_memory.py`
+- KV： [`src/agent_patterns_lab/runtime/memory/kv.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/memory/kv.py)
+- Session： [`src/agent_patterns_lab/runtime/memory/session.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/memory/session.py)
+- 测试： [`tests/test_memory.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_memory.py)
 

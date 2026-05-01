@@ -21,15 +21,15 @@ Most patterns are **compositions** of a few reusable runtime capabilities:
 
 ## Where It Lives in This Repo
 
-- Types + messages: `src/agent_patterns_lab/runtime/types.py`
+- Types + messages: [`src/agent_patterns_lab/runtime/types.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/types.py)
 - Model protocol + MockLLM: `src/agent_patterns_lab/runtime/model.py`, `src/agent_patterns_lab/runtime/mock_model.py`
-- Structured output: `src/agent_patterns_lab/runtime/structured.py`
-- Tools: `src/agent_patterns_lab/runtime/tools.py`
-- Loop controller: `src/agent_patterns_lab/runtime/runner.py`
-- Tracing: `src/agent_patterns_lab/runtime/tracing.py`
-- Reliability: `src/agent_patterns_lab/runtime/reliability.py`
-- Cache: `src/agent_patterns_lab/runtime/cache.py`
-- Memory: `src/agent_patterns_lab/runtime/memory/`
+- Structured output: [`src/agent_patterns_lab/runtime/structured.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/structured.py)
+- Tools: [`src/agent_patterns_lab/runtime/tools.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/tools.py)
+- Loop controller: [`src/agent_patterns_lab/runtime/runner.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/runner.py)
+- Tracing: [`src/agent_patterns_lab/runtime/tracing.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/tracing.py)
+- Reliability: [`src/agent_patterns_lab/runtime/reliability.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/reliability.py)
+- Cache: [`src/agent_patterns_lab/runtime/cache.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/cache.py)
+- Memory: [`src/agent_patterns_lab/runtime/memory/`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/memory/)
 - Governance: `src/agent_patterns_lab/runtime/policy.py`, `src/agent_patterns_lab/runtime/guardrails.py`, `src/agent_patterns_lab/runtime/hitl.py`
-- Eval harness: `src/agent_patterns_lab/runtime/evals/`
+- Eval harness: [`src/agent_patterns_lab/runtime/evals/`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/evals/)
 

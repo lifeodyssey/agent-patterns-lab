@@ -28,5 +28,5 @@ flowchart TD
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/reliability.py`
-- Tests: `tests/test_reliability.py`
+- Implementation: [`src/agent_patterns_lab/runtime/reliability.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/reliability.py)
+- Tests: [`tests/test_reliability.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_reliability.py)

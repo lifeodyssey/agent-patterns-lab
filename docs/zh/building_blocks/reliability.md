@@ -28,5 +28,5 @@ flowchart TD
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/reliability.py`
-- 测试：`tests/test_reliability.py`
+- 实现： [`src/agent_patterns_lab/runtime/reliability.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/reliability.py)
+- 测试： [`tests/test_reliability.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_reliability.py)

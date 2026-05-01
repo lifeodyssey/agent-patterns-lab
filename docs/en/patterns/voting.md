@@ -23,6 +23,24 @@ flowchart TD
   V --> O["Winner"]
 ```
 
+## How It Works
+
+Voting exploits diversity across samples:
+
+1. Generate `N` candidates from the same input (often with higher temperature).
+2. **Normalize** outputs if possible (e.g., extract final answer, parse JSON).
+3. Select the best candidate via:
+   - majority vote on identical normalized answers, or
+   - a separate “judge” model / rubric, or
+   - pairwise tournament (A vs B vs C…)
+
+## Failure Modes & Mitigations
+
+- **No clear majority**: use a judge rubric; increase N; fall back to maker-checker.
+- **Systematic bias** (all samples wrong): add retrieval / verification, not more voting.
+- **Hard to normalize**: enforce structured outputs; vote on derived metrics.
+- **Cost**: vote only on hard inputs (route easy ones to single-shot).
+
 ## Evolution Path
 
 - Often paired with: **Maker-Checker**, **CoVe** (verify claims after voting)
@@ -30,7 +48,6 @@ flowchart TD
 
 ## Repo Reference
 
-- Code: `src/agent_patterns_lab/patterns/voting.py`
-- Example: `examples/31_voting.py`
-- Tests: `tests/test_voting.py`
-
+- Code: [`src/agent_patterns_lab/patterns/voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/voting.py)
+- Example: [`examples/31_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/31_voting.py)
+- Tests: [`tests/test_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_voting.py)

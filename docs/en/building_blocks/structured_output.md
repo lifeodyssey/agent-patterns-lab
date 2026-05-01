@@ -35,6 +35,6 @@ flowchart TD
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/structured.py`
-- Examples: `examples/10_structured_output.py`
-- Tests: `tests/test_structured.py`
+- Implementation: [`src/agent_patterns_lab/runtime/structured.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/structured.py)
+- Examples: [`examples/10_structured_output.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/10_structured_output.py)
+- Tests: [`tests/test_structured.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_structured.py)

@@ -10,6 +10,6 @@
 
 ## 本仓库对应代码
 
-- 实现：`src/agent_patterns_lab/runtime/cache.py`
-- 测试：`tests/test_cache.py`
+- 实现： [`src/agent_patterns_lab/runtime/cache.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/cache.py)
+- 测试： [`tests/test_cache.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_cache.py)
 

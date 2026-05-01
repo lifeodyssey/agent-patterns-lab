@@ -11,7 +11,7 @@ This repo uses a tiny term-frequency index for demos/tests.
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/retrieval.py`
+- Implementation: [`src/agent_patterns_lab/runtime/retrieval.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/retrieval.py)
 - Sample corpus: `data/mini_corpus.jsonl`
-- Tests: `tests/test_retrieval.py`
+- Tests: [`tests/test_retrieval.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_retrieval.py)
 

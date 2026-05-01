@@ -19,6 +19,6 @@ Tracing turns a run into a **JSONL event log**.
 
 ## Repo Reference
 
-- Implementation: `src/agent_patterns_lab/runtime/tracing.py`
+- Implementation: [`src/agent_patterns_lab/runtime/tracing.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/runtime/tracing.py)
 - Traces output: `.traces/*.jsonl`
 
