@@ -3,8 +3,10 @@
 .python-version
 __pycache__/
 *.pyc
+*.egg-info/
 .traces/
 .evals/
 site/
 .wrangler/
 .DS_Store
+AGENTS.md
