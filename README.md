@@ -98,6 +98,13 @@ npx -y wrangler pages project create <project-name> --production-branch main
 npx -y wrangler pages deploy site --project-name <project-name> --branch main
 ```
 
+如果遇到 `wrangler` 报错 `fetch failed` / `API timed out`，且日志提示检测到 proxy 环境变量，可以先临时关闭代理环境变量再试：
+
+```bash
+unset all_proxy http_proxy https_proxy ALL_PROXY HTTP_PROXY HTTPS_PROXY
+npx -y wrangler pages deploy site --project-name <project-name> --branch main
+```
+
 默认语言为英文（根路径），中文在 `/zh/`：
 - `https://<project-name>.pages.dev/`
 - `https://<project-name>.pages.dev/zh/`
