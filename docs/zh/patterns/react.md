@@ -80,5 +80,5 @@ ReAct 常见有两种“动作表达方式”：
 
 ## 参考
 
-- ReAct（Reason+Act）：Yao 等，2022。citeturn3search0
-- Prompting Guide 的 ReAct 介绍页：citeturn2view0
+- Yao 等（2022）：《ReAct: Synergizing Reasoning and Acting in Language Models》https://arxiv.org/abs/2210.03629
+- Prompting Guide 的 ReAct 介绍页：https://www.promptingguide.ai/zh/techniques/react

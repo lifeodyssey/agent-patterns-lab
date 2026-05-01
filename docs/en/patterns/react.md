@@ -80,5 +80,5 @@ This repo uses the **structured** variant so the loop controller can reliably pa
 
 ## References
 
-- ReAct (Reason+Act): Yao et al., 2022. citeturn3search0
-- Prompting Guide (ReAct overview): citeturn2view0
+- Yao et al. (2022). *ReAct: Synergizing Reasoning and Acting in Language Models*. https://arxiv.org/abs/2210.03629
+- Prompting Guide — ReAct: https://www.promptingguide.ai/zh/techniques/react

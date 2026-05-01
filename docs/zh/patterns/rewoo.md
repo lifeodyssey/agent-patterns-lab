@@ -38,7 +38,7 @@ REWOO 用“少交互”换“少往返”：
 
 ## 参考
 
-- REWOO（Reasoning Without Observation）：Xu 等，2023。citeturn3search3
+- Xu 等（2023）：《ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models》https://arxiv.org/abs/2305.18323
 
 ## 本仓库对应
 

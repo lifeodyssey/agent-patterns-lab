@@ -43,7 +43,7 @@ The “lesson” is often more valuable than the raw conversation because it is 
 
 ## References
 
-- Reflexion: Shinn et al., 2023. citeturn3search1
+- Shinn et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning*. https://arxiv.org/abs/2303.11366
 
 ## Repo Reference
 

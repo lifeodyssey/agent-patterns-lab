@@ -42,7 +42,7 @@ This is useful when tool calling latency dominates and the task can be decompose
 
 ## References
 
-- REWOO (Reasoning Without Observation): Xu et al., 2023. citeturn3search3
+- Xu et al. (2023). *ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models*. https://arxiv.org/abs/2305.18323
 
 ## Repo Reference
 
