@@ -4,6 +4,18 @@
 
 When a system fails repeatedly in similar ways, you want it to **write lessons** and reuse them on retry.
 
+## When to Use
+
+- You see repeat failures with similar root causes.
+- You can verify success/failure (tests, checkers, constraints).
+- You want improvements to persist across attempts (not just one run).
+
+## When NOT to Use
+
+- You can’t tell success from failure (no checker, no tests, no rubric) → lessons will be made up.
+- The task is one-off (no repeated attempts) → a single maker-checker loop is cheaper.
+- Failures are mostly due to missing knowledge → add retrieval first; don’t “reflect” on ignorance.
+
 ## Core Flow
 
 ```mermaid
@@ -29,6 +41,19 @@ Reflexion turns “a failed run” into a reusable artifact:
 
 The “lesson” is often more valuable than the raw conversation because it is compact and portable.
 
+### Mechanics (what makes lessons usable)
+
+- **Lesson schema**: store `{symptom, root_cause, fix, checklist, scope}`; avoid vague “be careful”.
+- **Apply-at-start**: retrieve top-K relevant lessons before attempt #2 (don’t wait until the end).
+- **Guard against rationalization**: require linking the lesson to observed evidence (tool logs, failed checks).
+- **Decay**: keep memory small (TTL / top-K) so old lessons don’t dominate.
+
+## Worked Example
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/42_reflexion.py
+```
+
 ## Failure Modes & Mitigations
 
 - **Wrong lessons** (the model rationalizes): require evidence for the diagnosis; keep lessons short and testable.
@@ -41,12 +66,12 @@ The “lesson” is often more valuable than the raw conversation because it is 
 - Extends: Maker-Checker/CoVe by persisting lessons across runs
 - In production: pair with **session memory** + **evals** to prevent regressions
 
-## References
-
-- Shinn et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning*. https://arxiv.org/abs/2303.11366
-
 ## Repo Reference
 
 - Code: [`src/agent_patterns_lab/patterns/reflexion.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/reflexion.py)
 - Example: [`examples/42_reflexion.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/42_reflexion.py)
 - Tests: [`tests/test_reflexion.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_reflexion.py)
+
+## References
+
+- Shinn et al. (2023). *Reflexion: Language Agents with Verbal Reinforcement Learning*. https://arxiv.org/abs/2303.11366

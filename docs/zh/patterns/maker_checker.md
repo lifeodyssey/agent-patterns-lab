@@ -16,6 +16,12 @@ Maker-Checker 把“验证 + 反馈 + 修订”变成显式 loop。
 - 能写清楚 **rubric**（什么叫“通过/不通过”）。
 - 你想要可复现的质量提升，而不是“多试几次”。
 
+## 什么时候别用
+
+- 你有**确定性的校验器**（单测、schema、规则）能抓住问题 → 先用确定性校验。
+- checker 也判断不出来好坏（没 rubric、没可验证信号）→ loop 会变成“自己骗自己”。
+- 低风险、强延迟约束的场景 → 多一轮就是多一笔成本。
+
 ## 核心流程
 
 ```mermaid
@@ -35,6 +41,19 @@ flowchart TD
 
 关键点在于：Checker 的输出要 **结构化 + 可执行**，否则修订环节会变成“瞎改”。
 
+### 机制细节（让它真的起作用）
+
+- **rubric 是契约**：把“通过/不通过”绑定到具体条目，而不是“感觉更好”。
+- **角色隔离**：Maker/Checker 用不同 prompt（必要时不同模型）减少回音室效应。
+- **预算**：限制修订轮次；明确“够好即可”的阈值。
+- **外部校验优先**：能用工具/规则做 check 就别让 LLM 当裁判。
+
+## 一个能对照的例子
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/30_maker_checker.py
+```
+
 ## 常见失败模式与对策
 
 - **Maker/Checker “串谋”**：用不同 prompt/温度/甚至不同模型做 checker。
@@ -52,3 +71,8 @@ flowchart TD
 - 代码： [`src/agent_patterns_lab/patterns/maker_checker.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/maker_checker.py)
 - 示例： [`examples/30_maker_checker.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/30_maker_checker.py)
 - 测试： [`tests/test_maker_checker.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_maker_checker.py)
+
+## 参考资料
+
+- Self-Refine（迭代“反馈→修订”）：https://arxiv.org/abs/2303.17651
+- Evaluator–Optimizer（模式说明）：https://www.theagenticwiki.com/docs/patterns/evaluator-optimizer/

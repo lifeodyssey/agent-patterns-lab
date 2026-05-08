@@ -64,9 +64,47 @@ UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python -m agent_patterns_
 - `.evals/`：Markdown 报告 + JSON 结果（可作为 baseline 做回归对比）
 - `.traces/evals/`：每个 task 的 trace（JSONL）
 
+## 文档写作质量（review → revise → polish + rubric）
+
+当你要批量润色 `docs/` 页面（并对每一页按 rubric 打分）时，可以用内置的 editorial pipeline：
+
+```bash
+# Offline：只做启发式打分/建议（不改文件）
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python -m agent_patterns_lab.runtime.editorial \
+  --mode offline --input docs --out-dir .editorial
+
+# Live（OpenAI）：需要 OPENAI_API_KEY，且安装 extra
+uv sync --extra openai
+export OPENAI_API_KEY="..."
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync --extra openai python -m agent_patterns_lab.runtime.editorial \
+  --mode openai --input docs --out-dir .editorial
+
+# Live（Anthropic）：需要 ANTHROPIC_API_KEY，且安装 extra
+uv sync --extra anthropic
+export ANTHROPIC_API_KEY="..."
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync --extra anthropic python -m agent_patterns_lab.runtime.editorial \
+  --mode anthropic --input docs --out-dir .editorial
+```
+
+输出：
+- `.editorial/reports/`：每个页面的 review/revise/polish 分数与建议（JSON）
+- `.editorial/REPORT.md`：聚合报表（均分 + 最低分页面）
+- `.editorial/out/`：live 模式下的“重写副本”（未 `--apply` 时）
+
+如需直接覆盖源文件（谨慎使用；通常用于 live 模式）：
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python -m agent_patterns_lab.runtime.editorial \
+  --mode offline --input docs --out-dir .editorial --apply
+```
+
 ## 文档站点（MkDocs + 双语）
 
 本仓库提供了一个 **MkDocs + Material** 的文档站点配置（`mkdocs.yml`），并通过 `mkdocs-static-i18n` 生成 **中英双语** 文档。
+
+> 注意：`mkdocs.yml` 默认指向 `lifeodyssey/agent-patterns-lab`。
+> 如果你 fork 了仓库，可以在构建前用环境变量覆盖 `repo_url/repo_name/edit_uri`。
+> 这依赖 MkDocs 的 `!ENV` 配置语法。
 
 ```bash
 uv sync --extra docs
@@ -76,6 +114,15 @@ UV_CACHE_DIR=.uv_cache uv run --no-sync --extra docs mkdocs serve
 
 # Build static site
 UV_CACHE_DIR=.uv_cache uv run --no-sync --extra docs mkdocs build
+```
+
+覆盖仓库链接（可选）：
+
+```bash
+export REPO_URL="https://github.com/<you>/<repo>"
+export REPO_NAME="<you>/<repo>"
+export EDIT_URI="edit/main/docs/"
+UV_CACHE_DIR=.uv_cache uv run --no-sync --extra docs mkdocs build --clean
 ```
 
 ## 部署到 Cloudflare Pages（使用本地 Cloudflare CLI / wrangler）

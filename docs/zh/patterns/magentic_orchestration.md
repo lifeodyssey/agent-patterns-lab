@@ -8,6 +8,18 @@
 - 动态委派给 specialist
 - 停滞检测（重复委派同一件事则触发策略切换）
 
+## 什么时候用
+
+- 开放式任务，“一口气规划完”很可能会错。
+- 你需要显式进展追踪（任务账本 + 产物）。
+- 你预期会停滞，需要能触发策略切换/重规划。
+
+## 什么时候别用
+
+- 解法路径是确定性的 → workflow 或 manager-worker 更便宜、更好测。
+- 你并不需要账本/进展追踪 → 别为“可解释性”付冤枉钱。
+- 任务非常赶时间 → Magentic 会花 token 在规划与协调上。
+
 ## 核心流程
 
 ```mermaid
@@ -36,6 +48,19 @@ Magentic 风格把**任务账本（task ledger）**放在中心：
 3. 把结果写回账本。
 4. 做停滞检测（没有新进展）并触发策略切换/重规划。
 
+### 机制细节（区别于“随便多智能体”）
+
+- **账本是事实源**：manager 读写结构化 ledger，而不是只靠聊天记录。
+- **进展证据**：每轮必须产生新产物（笔记/决策/代码/验证结论），否则记为“无进展”。
+- **停滞规则**：重复同一工具/同一 agent、无新产物、计划来回摆动等。
+- **策略切换**：停滞后必须换打法（重拆解/换工具/拉人审批/收缩目标）。
+
+## 一个能对照的例子
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/65_magentic_orchestration.py
+```
+
 ## 常见失败模式与对策
 
 - **账本漂移**：账本 schema 要小；更新必须具体、可验证。
@@ -53,3 +78,9 @@ Magentic 风格把**任务账本（task ledger）**放在中心：
 - 代码： [`src/agent_patterns_lab/patterns/magentic_orchestration.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/magentic_orchestration.py)
 - 示例： [`examples/65_magentic_orchestration.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/65_magentic_orchestration.py)
 - 测试： [`tests/test_magentic_orchestration.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_magentic_orchestration.py)
+
+## 参考资料
+
+- Azure Architecture Center — Magentic orchestration：https://learn.microsoft.com/en-us/azure/architecture/ai-ml/guide/ai-agent-design-patterns
+- Microsoft Agent Framework — Magentic orchestration：https://learn.microsoft.com/en-us/agent-framework/user-guide/workflows/orchestrations/magentic
+- Fourney 等（2024）：Magentic-One：https://arxiv.org/abs/2411.04468

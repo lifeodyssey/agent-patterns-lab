@@ -6,6 +6,7 @@ __pycache__/
 *.egg-info/
 .traces/
 .evals/
+.editorial/
 site/
 .wrangler/
 .DS_Store

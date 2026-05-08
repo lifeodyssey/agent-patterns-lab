@@ -210,3 +210,27 @@
 - 不做 Web UI、不做 notebook 优化、不做“端到端产品”
 - 不把任何框架（LangChain/LangGraph 等）当作核心依赖
 - 不追求覆盖所有论文/冷门 pattern；重点是“大家常用 + 可复用核心代码”
+
+---
+
+## Iter 8（可选）— 文档质量流水线（review → revise → polish）
+
+> 目标：把“写文档”也当作可迭代的工程流程，做到：每页可评分、可回归、可批量润色。
+
+**输入**：`docs/` 现有页面  
+**输出**：
+
+- `runtime/editorial/`：review→revise→polish 流水线（每一步按 rubric 打分）
+- Rubric（0–5 五维）：清晰度、可操作性、边界、例子质量、术语一致性
+- CLI：`python -m agent_patterns_lab.runtime.editorial`
+  - offline：启发式评分/建议（不改文档）
+  - openai/anthropic：用真实模型做改写 + 复评
+- 产物目录：
+  - `.editorial/reports/`：每页 JSON 评分与建议
+  - `.editorial/REPORT.md`：聚合报表（均分 + 低分页面）
+  - `.traces/editorial/`：trace（JSONL）
+- 站点页面：写作 Rubric 说明页（双语）
+
+**验收**：
+- offline 模式可离线跑通并产出聚合报告
+- live 模式可在有 API key 时批量改写并复评

@@ -8,6 +8,18 @@
 2. 执行每一步
 3. 汇总得到最终答案
 
+## 什么时候用
+
+- 任务是多步骤的，你希望有一个显式 plan 产物可审阅/可回归。
+- 你更看重可调试性（中间产物）而不是极致延迟。
+- 你能写清每一步“完成”的判定标准。
+
+## 什么时候别用
+
+- 任务本来就是一步（分类/改写/短回答）→ plan 只会多一次调用。
+- 环境强交互（每步都要看工具观测再决定下一步）→ 用 PER 或 ReAct 更自然。
+- 你写不清“每步完成标准” → 计划会变成漂亮清单，但没法落地。
+
 ## 核心流程
 
 ```mermaid
@@ -28,6 +40,19 @@ Plan & Solve 引入一个显式的“计划产物”：
 
 它的价值在于：把结构外化，减少“在长链路里迷路/跳步/漏步”。
 
+### 机制细节（最好显式化）
+
+- **计划 schema**：每步带 `id / goal / inputs / definition_of_done`，别只写“做一下 X”。
+- **执行驱动**：别让模型“半跟计划”；真正逐步执行并记录结果。
+- **计划审阅**：加一个轻量 checker，先抓“缺前置/不可执行步骤”，再开跑。
+- **预算**：限制 plan 长度与 step 重试次数；长计划很容易变成成本陷阱。
+
+## 一个能对照的例子
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/50_plan_and_solve.py
+```
+
 ## 常见失败模式与对策
 
 - **计划不靠谱**（漏步骤/顺序错）：加 plan review；固定 plan 模板。
@@ -45,3 +70,7 @@ Plan & Solve 引入一个显式的“计划产物”：
 - 代码： [`src/agent_patterns_lab/patterns/plan_and_solve.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/plan_and_solve.py)
 - 示例： [`examples/50_plan_and_solve.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/50_plan_and_solve.py)
 - 测试： [`tests/test_plan_and_solve.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_plan_and_solve.py)
+
+## 参考资料
+
+- Wang 等（2023）：Plan-and-Solve Prompting：https://arxiv.org/abs/2305.04091

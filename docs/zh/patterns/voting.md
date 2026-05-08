@@ -10,6 +10,12 @@
 - 任务足够便宜，能采样 N 次
 - 更看重稳健性而非极致延迟
 
+## 什么时候别用
+
+- 任务需要**外部真相**（最新事实、工具观测）→ 先加检索/验证，不要只加采样。
+- 你没法 normalize（长文无“答案键”）→ 更适合 Maker-Checker。
+- 你已经预算紧张 → voting 天生是“成本倍增器”。
+
 ## 核心流程
 
 ```mermaid
@@ -34,6 +40,19 @@ Voting 利用多次采样带来的“多样性”：
    - 用单独的 judge / rubric 对候选打分
    - 做 pairwise 淘汰赛（A vs B vs C…）
 
+### 机制细节（提前定好，别临场拍脑袋）
+
+- **投票对象**：是最终答案字符串？解析后的 JSON？还是某个派生 key（比如 route id）？
+- **normalize 方法**：能严格解析就别用正则；不要对原始长文直接投票。
+- **平票处理**：judge rubric、选“更易验证”的候选、或回退到 checker。
+- **何时花票**：先路由，只把难样本送去 voting；简单样本保持 single-shot。
+
+## 一个能对照的例子
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/31_voting.py
+```
+
 ## 常见失败模式与对策
 
 - **没有明显多数**：引入 judge rubric；增大 N；或回退到 maker-checker。
@@ -51,3 +70,7 @@ Voting 利用多次采样带来的“多样性”：
 - 代码： [`src/agent_patterns_lab/patterns/voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/voting.py)
 - 示例： [`examples/31_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/31_voting.py)
 - 测试： [`tests/test_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_voting.py)
+
+## 参考资料
+
+- Wang 等（2022）：Self-Consistency（多条推理路径采样→选最一致答案）https://arxiv.org/abs/2203.11171

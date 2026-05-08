@@ -9,6 +9,18 @@
 3. 逐条验证（工具/规则/人工）
 4. 基于验证结果修订
 
+## 什么时候用
+
+- 你真的在乎事实正确性（不仅是“看起来合理”）。
+- 输出里有多个可验证 claim（清单、对比、“X 是 Y”这类断言）。
+- 你有验证手段（检索/工具/规则/HITL 至少一种）。
+
+## 什么时候别用
+
+- 你根本没法验证（没工具、没来源、也没人能 review）→ CoVe 只剩仪式感。
+- 任务是纯创意写作（小说、文案气质），“事实”不是目标。
+- 输出很短且低风险 → 简单重试或 Maker-Checker 可能更便宜。
+
 ## 核心流程
 
 ```mermaid
@@ -31,6 +43,19 @@ flowchart TD
   - 高风险走人工审批（HITL）
 - **基于证据修订**：把不支持的 claim 删除/改写，最后只留下能自证的内容。
 
+### 机制细节（区别于“再读一遍”）
+
+- **claim 原子化**：把断言拆到“可独立检查”的颗粒度。
+- **证据产物**：验证步骤必须输出证据（doc_id/snippet/计算），不能只说“我觉得对”。
+- **抗锚定**：验证时尽量不要被 draft 的措辞带偏（可以用“验证问题→独立回答”的方式）。
+- **选择性验证**：别全验；优先验高风险、对外展示、最容易出错的断言。
+
+## 一个能对照的例子
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/32_cove.py
+```
+
 ## 常见失败模式与对策
 
 - **漏掉 claim**：强制结构化 claim 列表；必要时二次抽取。
@@ -48,3 +73,7 @@ flowchart TD
 - 代码： [`src/agent_patterns_lab/patterns/cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/cove.py)
 - 示例： [`examples/32_cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/32_cove.py)
 - 测试： [`tests/test_cove.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_cove.py)
+
+## 参考资料
+
+- Dhuliawala 等（2023）：Chain-of-Verification（CoVe）https://arxiv.org/abs/2309.11495

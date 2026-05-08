@@ -5,6 +5,18 @@
 Different tasks benefit from different strategies (check, simplify, decompose…).  
 Self-Discovery makes the model **choose** modules first, then solve with that guidance.
 
+## When to Use
+
+- You want strategy to be explicit (“which playbook are we using?”).
+- You have a small set of reusable reasoning checklists/modules.
+- You want more consistency across similar tasks.
+
+## When NOT to Use
+
+- Your module library is vague or huge → selection becomes random; start by shrinking and sharpening modules.
+- The task is simple enough for a single prompt → module selection adds a call without adding signal.
+- You can’t tolerate strategy drift (“select modules then ignore them”) → prefer deterministic workflows.
+
 ## Core Flow
 
 ```mermaid
@@ -24,6 +36,19 @@ Self-Discovery separates “strategy choice” from “execution”:
 
 This improves consistency because the model commits to a strategy before diving into details.
 
+### Mechanics (how to keep modules useful)
+
+- **Modules are checklists**: each module should say what to do and what to output (not a motivational slogan).
+- **Selection is bounded**: pick at most `k` modules; force a short justification (“why these, not others”).
+- **Composition matters**: module order is part of the strategy (decompose → solve → verify is different from verify → decompose).
+- **Re-select on failure**: after a quick self-check, allow swapping modules when the chosen set is clearly wrong.
+
+## Worked Example
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/55_self_discovery.py
+```
+
 ## Failure Modes & Mitigations
 
 - **Module list too vague**: make modules concrete (inputs/outputs/checklists).
@@ -41,3 +66,8 @@ This improves consistency because the model commits to a strategy before diving 
 - Code: [`src/agent_patterns_lab/patterns/self_discovery.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/self_discovery.py)
 - Example: [`examples/55_self_discovery.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/55_self_discovery.py)
 - Tests: [`tests/test_self_discovery.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_self_discovery.py)
+
+## References
+
+- Zhou et al. (2024). *Self-Discover: Large Language Models Self-Compose Reasoning Structures*: https://arxiv.org/abs/2402.03620
+- Agent Patterns — Self-Discovery pattern page: https://agent-patterns.readthedocs.io/en/stable/patterns/self-discovery.html

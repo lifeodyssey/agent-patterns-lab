@@ -1,84 +1,113 @@
-# ReAct (Reason → Act → Observe Loop)
+# ReAct: The First Travel Planning Agent Loop
 
-## What Problem It Solves
+If you have not read the progression yet, start with [05: Agent Loop](../tutorial/05_agent_loop.md). ReAct is not the starting point; it appears after a chatbot needs tools and the next step depends on tool results.
 
-Classic prompting patterns (e.g., “think then answer”) break down when the agent must **interact with an environment**.
+ReAct solves a concrete problem: **sometimes the model must take one step, inspect the result, and only then decide the next step.**
 
-If the next step depends on observations (tool outputs), you need a **control loop** that can:
+Travel planning is a natural example. A user asks for a relaxed one-day Hangzhou trip with tea, local food, easy walking, and packing advice. The model should not invent the plan in one shot. It should check weather, find places, estimate a route, and then answer.
 
-- decide what to do next
-- call tools
-- update context
-- repeat until done
+## Full Code
 
-ReAct is the canonical “agent loop” pattern: **interleave reasoning and acting**, so the agent can ground its next decision in fresh observations.
+```python
+--8<-- "examples/21_react_loop.py"
+```
 
-## When to Use
+Run:
 
-- Unknown number of tool calls.
-- The environment is interactive (search, APIs, file ops).
-- You need a “stop condition” (final answer).
+```bash
+uv run python examples/21_react_loop.py
+```
 
-## How It Works (Conceptually)
+Expected output:
 
-ReAct is a minimal *closed-loop controller*:
+```text
+Plan: West Lake in the morning, China National Tea Museum after the rain starts, then Hefang Street for snacks. Pack an umbrella, a light jacket, and comfortable shoes.
+[trace] .traces/21_react_loop.jsonl
+```
 
-1. **State**: current conversation + any scratchpad / ledger.
-2. **Decision**: pick the next step (a tool call) *or* finish.
-3. **Action**: execute the tool.
-4. **Observation**: append tool output back into state.
-5. Repeat until a **termination condition** holds.
+## Why This Looks Like An Agent
 
-Compared to “one-shot tool calling”, the loop matters because the agent can:
+This example makes several decisions, not just one tool call:
 
-- recover from partial failures (retry, choose a different tool, ask for clarification)
-- adapt when tool outputs are surprising
-- stop early when evidence is sufficient
+| Step | Model requests | Python does | Result |
+|---|---|---|---|
+| 1 | `get_weather` | Looks up tomorrow's Hangzhou weather | Light rain after 15:00 |
+| 2 | `search_places` | Finds places for tea, food, easy walking, and rain | West Lake, Tea Museum, Hefang Street |
+| 3 | `estimate_route` | Estimates route order and travel time | Morning outdoors, afternoon indoors |
+| 4 | `final` | Stops the loop | Returns the plan |
 
-## Core Flow (Action Schema)
+The key boundary: **the model requests actions; Python validates, executes, records, and stops them.**
+
+## Flow
 
 ```mermaid
 flowchart TD
-  S["State (messages)"] --> D["Decide action (JSON)"]
-  D -->|tool| T["Call tool"]
-  T --> O["Observation"]
-  O --> S
-  D -->|final| F["Final answer"]
+  U["User asks for a Hangzhou day trip"] --> S["State: task + tool results"]
+  S --> M["Model chooses next action"]
+  M -->|get_weather| W["Check weather"]
+  W --> OW["Append: afternoon rain"]
+  OW --> S
+  M -->|search_places| P["Find places"]
+  P --> OP["Append: West Lake / Tea Museum / Hefang Street"]
+  OP --> S
+  M -->|estimate_route| R["Estimate route"]
+  R --> OR["Append: route and time"]
+  OR --> S
+  M -->|final| F["Return travel plan"]
+  S --> L["RunLimits: max 6 steps"]
+  L -->|limit hit| X["Stop"]
 ```
 
-## Prompt / Output Format (Two Common Shapes)
+## Core Implementation
 
-Most ReAct implementations use one of these shapes:
+```python
+--8<-- "src/agent_patterns_lab/patterns/react.py"
+```
 
-1. **Textual**: `Thought:` → `Action:` → `Observation:` (repeat) → `Final:`
-2. **Structured** (recommended for tooling): decide a JSON “next action”, e.g.:
-   - `{ "type": "tool", "name": "search", "args": {...} }`
-   - `{ "type": "final", "answer": "..." }`
+What to notice:
 
-This repo uses the **structured** variant so the loop controller can reliably parse actions and log traces.
+- `structured_complete(...)` forces the model to return a valid action.
+- `FinalAction` ends the loop.
+- `AskAction` asks the user for missing information.
+- `ToolAction` calls a Python tool and appends the result to `messages`.
+- `run_loop(...)` enforces the step budget.
 
-## Failure Modes & Mitigations
+## Text ReAct vs JSON ReAct
 
-- **Looping / no-progress**: add max steps, stall detection, or “reflect then replan”.
-- **Bad tool selection**: add routing, tool descriptions, or a planner step.
-- **Hallucinated observations**: enforce “observations must come from tools” + guardrails.
-- **High cost**: add caching, budgets, and early-stop conditions.
+The paper often presents ReAct as:
 
-## Evolution Path
+```text
+Thought: I need to check the weather.
+Action: get_weather[Hangzhou, tomorrow]
+Observation: It will rain in the afternoon.
+Final: ...
+```
 
-- Built on: **Tool calling + Structured output + Loop controller**
-- Specializations:
-  - **Agentic RAG** = ReAct + retrieval tool + evidence ledger
-  - **Governance** hooks = policy/guardrails/HITL around tool calls
-  - **Multi-agent** = run multiple ReAct loops under a coordinator (handoff / manager-worker)
+This repo keeps the same idea, but uses JSON actions:
 
-## Repo Reference
+```json
+{"type":"tool","tool":"get_weather","args":{"city":"Hangzhou","date":"tomorrow"}}
+```
 
-- Code: [`src/agent_patterns_lab/patterns/react.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/react.py)
-- Example: [`examples/21_react_loop.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/21_react_loop.py)
-- Tests: [`tests/test_react.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_react.py)
+JSON is easier to parse, validate, trace, and test.
+
+## When To Use It
+
+- The next step depends on tool output.
+- You do not know how many tool calls are needed.
+- You need a replayable trace of the model's decisions.
+
+## When Not To Use It
+
+- If one model call is enough, do not build a loop.
+- If all steps are fixed, use Prompt Chaining.
+- If one tool call is enough, call the tool directly.
+- If tools can book, pay, or mutate production data, add policy, guardrails, and human confirmation first.
 
 ## References
 
-- Yao et al. (2022). *ReAct: Synergizing Reasoning and Acting in Language Models*. https://arxiv.org/abs/2210.03629
-- Prompting Guide — ReAct: https://www.promptingguide.ai/zh/techniques/react
+- [ReAct paper](https://arxiv.org/abs/2210.03629)
+- [Prompting Guide: ReAct](https://www.promptingguide.ai/techniques/react)
+- [Anthropic: Building effective agents](https://www.anthropic.com/engineering/building-effective-agents)
+- [Implementation: `src/agent_patterns_lab/patterns/react.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/react.py)
+- [Example: `examples/21_react_loop.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/21_react_loop.py)

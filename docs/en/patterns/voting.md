@@ -10,6 +10,12 @@ For many prompts, the model is stochastic. Voting reduces variance by sampling m
 - The task is cheap enough to sample N times.
 - You want robustness more than latency.
 
+## When NOT to Use
+
+- The task needs **external truth** (fresh facts, tool outputs) → add retrieval/verification, not more samples.
+- Normalization is impossible (long essays with no clear “answer key”) → consider **maker-checker** instead of voting.
+- You’re already budget-limited → voting is a cost multiplier by design.
+
 ## Core Flow
 
 ```mermaid
@@ -34,6 +40,19 @@ Voting exploits diversity across samples:
    - a separate “judge” model / rubric, or
    - pairwise tournament (A vs B vs C…)
 
+### Mechanics (what to decide up front)
+
+- **What you vote on**: final answer string, parsed JSON, or a derived key (e.g., “route id”).
+- **How you normalize**: strict parsing beats regex; avoid voting on raw prose if you can.
+- **How you break ties**: judge rubric, prefer cheaper-to-verify candidates, or fall back to a checker.
+- **When to spend the votes**: route only hard/ambiguous cases to voting; keep easy cases single-shot.
+
+## Worked Example
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/31_voting.py
+```
+
 ## Failure Modes & Mitigations
 
 - **No clear majority**: use a judge rubric; increase N; fall back to maker-checker.
@@ -51,3 +70,7 @@ Voting exploits diversity across samples:
 - Code: [`src/agent_patterns_lab/patterns/voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/voting.py)
 - Example: [`examples/31_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/31_voting.py)
 - Tests: [`tests/test_voting.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_voting.py)
+
+## References
+
+- Self-Consistency (sampling multiple reasoning paths → choose the most consistent): https://arxiv.org/abs/2203.11171

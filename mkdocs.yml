@@ -1,9 +1,14 @@
 site_name: Agent Patterns Lab
-site_url: https://agent-patterns-lab.pages.dev/
+site_url: !ENV [SITE_URL, "https://agent-patterns-lab.pages.dev/"]
 
-repo_url: https://github.com/lifeodyssey/agent-patterns-lab
-repo_name: lifeodyssey/agent-patterns-lab
-edit_uri: edit/main/docs/
+repo_url: !ENV [REPO_URL, "https://github.com/lifeodyssey/agent-patterns-lab"]
+repo_name: !ENV [REPO_NAME, "lifeodyssey/agent-patterns-lab"]
+edit_uri: !ENV [EDIT_URI, "edit/main/docs/"]
+
+exclude_docs: |
+  superpowers/
+  en/patterns/_template.md
+  zh/patterns/_template.md
 
 theme:
   name: material
@@ -34,7 +39,20 @@ plugins:
           name: 简体中文
           build: true
           nav_translations:
-            Map: 地图
+            Home: 首页
+            Guide: 入门路线
+            Start Here: 从这里开始
+            Command Notes: 命令解释
+            From Chatbot to Agent: 从 Chatbot 到 Agent
+            00 Minimal Chatbot: 00 最小 Chatbot
+            01 Conversation History: 01 对话历史
+            02 Structured Output: 02 结构化输出
+            03 Tool Calling: 03 工具调用
+            04 Workflow: 04 Workflow
+            05 Agent Loop: 05 Agent Loop
+            Mental Model: 心智模型
+            Choose a Pattern: 选择模式
+            Glossary: 术语表
             Building Blocks: 基建
             Patterns: 模式
             Workflow: 工作流
@@ -45,10 +63,14 @@ plugins:
             Multi-Agent: 多智能体
             Governance: 治理与安全
             Evaluation: 评测与回归
+            Eval Harness: Eval Harness
+            Editorial Rubric: 写作 Rubric
 
 markdown_extensions:
   - admonition
   - pymdownx.details
+  - pymdownx.snippets:
+      check_paths: true
   - pymdownx.superfences:
       custom_fences:
         - name: mermaid
@@ -56,7 +78,20 @@ markdown_extensions:
           format: !!python/name:mermaid2.fence_mermaid_custom
 
 nav:
-  - Map: index.md
+  - Guide:
+      - Home: index.md
+      - Start Here: start_here.md
+      - Command Notes: run_commands.md
+      - From Chatbot to Agent:
+          - 00 Minimal Chatbot: tutorial/00_chatbot.md
+          - 01 Conversation History: tutorial/01_conversation.md
+          - 02 Structured Output: tutorial/02_structured_output.md
+          - 03 Tool Calling: tutorial/03_tool_calling.md
+          - 04 Workflow: tutorial/04_workflow.md
+          - 05 Agent Loop: tutorial/05_agent_loop.md
+      - Mental Model: mental_model.md
+      - Choose a Pattern: choose_pattern.md
+      - Glossary: glossary.md
   - Building Blocks:
       - Runtime Overview: building_blocks/runtime.md
       - Structured Output: building_blocks/structured_output.md
@@ -101,3 +136,4 @@ nav:
       - HITL: governance/hitl.md
   - Evaluation:
       - Eval Harness: evaluation/eval_harness.md
+      - Editorial Rubric: evaluation/editorial_rubric.md

@@ -7,9 +7,21 @@ from agent_patterns_lab.runtime import Message, MockLLM, Tracer
 
 def main() -> None:
     tracer = Tracer()
-    model = MockLLM(["Hello from MockLLM (single-shot)"])
+    model = MockLLM(
+        [
+            (
+                "A relaxed Hangzhou day: visit West Lake in the morning, "
+                "try local snacks near Hefang Street, and bring comfortable shoes."
+            )
+        ]
+    )
 
-    messages = [Message(role="user", content="Say hello.")]
+    messages = [
+        Message(
+            role="user",
+            content="Plan a relaxed one-day Hangzhou trip. I like tea, local food, and easy walking.",
+        )
+    ]
     answer = model.complete(messages, tracer=tracer)
 
     print(answer)

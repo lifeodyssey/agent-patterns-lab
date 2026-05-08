@@ -8,6 +8,18 @@ Tool loops can be slow/expensive due to multiple round-trips. REWOO reduces this
 - executing tools in batch
 - synthesizing once
 
+## When to Use
+
+- Tool latency dominates, and tool calls are mostly independent.
+- You can predict the needed tool calls without intermediate observations.
+- You want fewer LLM round-trips (cost + latency control).
+
+## When NOT to Use
+
+- The right next tool depends on what you just observed → use **ReAct**.
+- Tool calls have tight dependencies (call B only if A returns X) → REWOO will over-fetch or miss branches.
+- You need strong recovery from tool failures mid-run → a loop controller is usually safer than a single batch.
+
 ## Core Flow
 
 ```mermaid
@@ -28,6 +40,18 @@ REWOO trades adaptivity for fewer LLM round-trips:
 
 This is useful when tool calling latency dominates and the task can be decomposed reliably.
 
+### Mechanics (what to make explicit)
+
+- **Plan format**: represent tool calls as a list of `{name, args}` plus optional dependency keys.
+- **Batch execution policy**: parallelize only independent calls; handle partial failures (missing results) explicitly.
+- **Fallback path**: if synthesis detects missing info, do one more batch or drop back to ReAct.
+
+## Worked Example
+
+```bash
+UV_CACHE_DIR=.uv_cache PYTHONPATH=src uv run --no-sync python examples/52_rewoo.py
+```
+
 ## Failure Modes & Mitigations
 
 - **Plan is wrong without observations**: keep plans short; allow a second planning round; fall back to ReAct when needed.
@@ -40,12 +64,12 @@ This is useful when tool calling latency dominates and the task can be decompose
 - A “workflow” alternative to ReAct when tool costs dominate
 - Often combined with: **verification** after synthesis
 
-## References
-
-- Xu et al. (2023). *ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models*. https://arxiv.org/abs/2305.18323
-
 ## Repo Reference
 
 - Code: [`src/agent_patterns_lab/patterns/rewoo.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/src/agent_patterns_lab/patterns/rewoo.py)
 - Example: [`examples/52_rewoo.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/examples/52_rewoo.py)
 - Tests: [`tests/test_rewoo.py`](https://github.com/lifeodyssey/agent-patterns-lab/blob/main/tests/test_rewoo.py)
+
+## References
+
+- Xu et al. (2023). *ReWOO: Decoupling Reasoning from Observations for Efficient Augmented Language Models*. https://arxiv.org/abs/2305.18323

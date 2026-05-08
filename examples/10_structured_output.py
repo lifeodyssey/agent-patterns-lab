@@ -9,40 +9,47 @@ from agent_patterns_lab.runtime import Message, MockLLM, SchemaValidationError, 
 def main() -> None:
     tracer = Tracer()
 
-    # First response is valid JSON but fails schema validation; second fixes it.
     model = MockLLM(
         [
-            '{"answer": 123}',
-            '{"answer": "hello"}',
+            '{"city":"Hangzhou","items":["West Lake","Tea Museum"]}',
+            '{"city":"Hangzhou","morning":"West Lake","afternoon":"China National Tea Museum","evening":"Hefang Street","packing":["umbrella","light jacket","comfortable shoes"]}',
         ]
     )
 
     messages = [
-        Message(role="system", content='Return ONLY JSON like: {"answer": "<string>"}'),
-        Message(role="user", content="Say hello."),
+        Message(
+            role="system",
+            content=(
+                "Return ONLY JSON with keys: city, morning, afternoon, evening, packing. "
+                "packing must be a list of strings."
+            ),
+        ),
+        Message(role="user", content="Create a one-day Hangzhou itinerary."),
     ]
 
-    def parse_answer(value: Any) -> str:
+    def parse_itinerary(value: Any) -> dict[str, Any]:
         if not isinstance(value, dict):
             raise SchemaValidationError("expected a JSON object")
-        answer = value.get("answer")
-        if not isinstance(answer, str):
-            raise SchemaValidationError('expected key "answer" to be a string')
-        return answer
+        required = ["city", "morning", "afternoon", "evening", "packing"]
+        for key in required:
+            if key not in value:
+                raise SchemaValidationError(f'missing key "{key}"')
+        if not isinstance(value["packing"], list) or not all(isinstance(x, str) for x in value["packing"]):
+            raise SchemaValidationError('"packing" must be a list of strings')
+        return value
 
-    answer = structured_complete(
+    itinerary = structured_complete(
         model,
         messages,
-        parser=parse_answer,
-        schema_hint='{"answer":"<string>"}',
+        parser=parse_itinerary,
+        schema_hint='{"city":"...","morning":"...","afternoon":"...","evening":"...","packing":["..."]}',
         tracer=tracer,
     )
 
-    print(answer)
+    print(itinerary)
     trace_path = tracer.export_jsonl(Path(".traces") / "10_structured_output.jsonl")
     print(f"[trace] {trace_path}")
 
 
 if __name__ == "__main__":
     main()
-
